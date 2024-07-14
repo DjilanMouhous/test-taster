@@ -25,6 +25,8 @@ import { Input } from "../../../components/ui/input";
 import { InputTags } from "../../../components/ui/input-tags";
 import React from "react";
 import { toast } from "../../../components/ui/use-toast";
+
+// Define the props for the AddUserDialog component
 interface AddUserProps {
   addNewUserCallback: (
     user: z.infer<typeof UserCreateValidator>
@@ -32,9 +34,12 @@ interface AddUserProps {
 }
 
 export default function AddUserDialog({ addNewUserCallback }: AddUserProps) {
+  // State variables
   const [hobbies, setHobbies] = React.useState<string[]>([]);
   const [loading, setLoading] = React.useState<boolean>(false);
   const [error, setError] = React.useState<string | null>(null);
+
+  // Form setup using react-hook-form
   const form = useForm<z.infer<typeof UserCreateValidator>>({
     resolver: zodResolver(UserCreateValidator),
     defaultValues: {
@@ -47,23 +52,31 @@ export default function AddUserDialog({ addNewUserCallback }: AddUserProps) {
     },
   });
 
+  // Form submission handler
   async function onSubmit(values: z.infer<typeof UserCreateValidator>) {
     console.log("form valid");
     setLoading(true);
+
+    // Remove the picture_url field if it's empty
     if (values.picture_url === "") {
-      // Remove the picture_url field if it's empty
       delete values.picture_url;
     }
+
     console.log(values);
-    const sucess = await addNewUserCallback(values);
+    const success = await addNewUserCallback(values);
     setLoading(false);
-    if (sucess) {
+
+    if (success) {
       console.log("User created successfully");
       const formatted_date = new Date().toLocaleDateString();
+
+      // Show a toast notification for successful user creation
       toast({
         title: "User Successfully Created",
         description: `User ${values.first_name} ${values.last_name} created on ${formatted_date}`,
       });
+
+      // Reset the form and hobbies state
       setHobbies([]);
       form.reset();
     } else {
@@ -71,6 +84,7 @@ export default function AddUserDialog({ addNewUserCallback }: AddUserProps) {
     }
   }
 
+  // Update the form value for hobbies when the hobbies state changes
   React.useEffect(() => {
     form.setValue("hobbies", hobbies);
   }, [hobbies]);
@@ -98,6 +112,7 @@ export default function AddUserDialog({ addNewUserCallback }: AddUserProps) {
               className=" space-y-6 mt-8"
             >
               <div className="fields_wrapper space-y-3 ">
+                {/* First Name field */}
                 <FormField
                   control={form.control}
                   name="first_name"
@@ -107,11 +122,12 @@ export default function AddUserDialog({ addNewUserCallback }: AddUserProps) {
                       <FormControl>
                         <Input placeholder="John" {...field} />
                       </FormControl>
-
                       <FormMessage />
                     </FormItem>
                   )}
                 />
+
+                {/* Last Name field */}
                 <FormField
                   control={form.control}
                   name="last_name"
@@ -121,11 +137,12 @@ export default function AddUserDialog({ addNewUserCallback }: AddUserProps) {
                       <FormControl>
                         <Input placeholder="Doe" {...field} />
                       </FormControl>
-
                       <FormMessage />
                     </FormItem>
                   )}
                 />
+
+                {/* Email field */}
                 <FormField
                   control={form.control}
                   name="email"
@@ -139,6 +156,8 @@ export default function AddUserDialog({ addNewUserCallback }: AddUserProps) {
                     </FormItem>
                   )}
                 />
+
+                {/* Birth Date field */}
                 <FormField
                   control={form.control}
                   name="birth_date"
@@ -152,6 +171,8 @@ export default function AddUserDialog({ addNewUserCallback }: AddUserProps) {
                     </FormItem>
                   )}
                 />
+
+                {/* Hobbies field */}
                 <FormField
                   control={form.control}
                   name="hobbies"
@@ -172,6 +193,8 @@ export default function AddUserDialog({ addNewUserCallback }: AddUserProps) {
                     </FormItem>
                   )}
                 />
+
+                {/* Picture URL field */}
                 <FormField
                   control={form.control}
                   name="picture_url"
@@ -189,6 +212,8 @@ export default function AddUserDialog({ addNewUserCallback }: AddUserProps) {
                   )}
                 />
               </div>
+
+              {/* Submit button, loading spinner, and error message */}
               <div className="flex items-center gap-2">
                 <Button className="" type="submit">
                   Submit
