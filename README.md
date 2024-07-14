@@ -37,13 +37,18 @@ Bienvenue dans ce test technique ! L'application permet de gérer une liste pagi
    ```sh
    npm install
    ```
-3. Lancer l'application :
+3. Créer un fichier `.env` à la racine du projet et ajouter la variable d'environnement suivante :
+   ```sh
+   REACT_APP_API_KEY=XXXX
+   REACT_APP_API_BASE_URL=XXXX (with / at the end)
+   ```
+4. Lancer l'application :
    ```sh
    npm start
    ```
-4. Ouvrir l'application dans un navigateur à l'adresse [http://localhost:3000](http://localhost:3000).
+5. Ouvrir l'application dans un navigateur à l'adresse [http://localhost:3000](http://localhost:3000).
 
-5. Pour lancer les tests avec Cypress :
+6. Pour lancer les tests avec Cypress :
    ```sh
    npm run test
    ```
