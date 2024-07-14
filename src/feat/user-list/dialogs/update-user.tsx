@@ -88,19 +88,15 @@ export default function UpdateUserDialog({
   }, [initalDataReady]);
 
   async function onSubmit(values: z.infer<typeof UserCreateValidator>) {
-    console.log("form valid");
     updateUserCallback(values);
     setLoading(true);
     if (values.picture_url === "") {
       // Remove the picture_url field if it's empty
       delete values.picture_url;
     }
-    console.log("uuid is ", user);
-    console.log(values);
     const sucess = await updateUser({ user: values, uuid: user });
     setLoading(false);
     if (sucess) {
-      console.log("User updated successfully");
       const formatted_date = new Date().toLocaleDateString();
       toast({
         title: "User Successfully Created",
@@ -137,8 +133,7 @@ export default function UpdateUserDialog({
           <Form {...form}>
             <form
               onSubmit={form.handleSubmit(onSubmit, (errors) => {
-                console.log(form.getValues());
-                console.log(errors);
+                console.error(errors);
               })}
               className=" space-y-6 mt-8"
             >

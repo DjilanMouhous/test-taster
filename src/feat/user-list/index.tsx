@@ -40,7 +40,6 @@ export default function UserListTable() {
   React.useEffect(() => {
     if (search === "" && !isSearchDirty) return;
     setIsSearchDirty(true);
-    console.log("search", search);
     getUserList({ search: search }).then((data) => {
       setData(data.users);
       setTotalFetched(data.users.length);
@@ -79,7 +78,6 @@ export default function UserListTable() {
   ): Promise<boolean> => {
     const userCreatedDetails: UserPostApiDetails = await createUser(user);
 
-    console.log("User created", userCreatedDetails.success);
     if (userCreatedDetails.success) {
       setTotalDBRowCount((oldTotal) => oldTotal + 1);
     }

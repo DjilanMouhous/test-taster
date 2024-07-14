@@ -93,7 +93,6 @@ export const columns: ColumnDef<User>[] = [
           hobbies: newUser.hobbies,
           updated_at: updated_at,
         };
-        console.log("new edited user", editedNewUser);
         row.original = editedNewUser;
       };
       return (

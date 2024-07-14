@@ -54,7 +54,6 @@ export default function AddUserDialog({ addNewUserCallback }: AddUserProps) {
 
   // Form submission handler
   async function onSubmit(values: z.infer<typeof UserCreateValidator>) {
-    console.log("form valid");
     setLoading(true);
 
     // Remove the picture_url field if it's empty
@@ -62,12 +61,10 @@ export default function AddUserDialog({ addNewUserCallback }: AddUserProps) {
       delete values.picture_url;
     }
 
-    console.log(values);
     const success = await addNewUserCallback(values);
     setLoading(false);
 
     if (success) {
-      console.log("User created successfully");
       const formatted_date = new Date().toLocaleDateString();
 
       // Show a toast notification for successful user creation
@@ -106,8 +103,7 @@ export default function AddUserDialog({ addNewUserCallback }: AddUserProps) {
           <Form {...form}>
             <form
               onSubmit={form.handleSubmit(onSubmit, (errors) => {
-                console.log(form.getValues());
-                console.log(errors);
+                console.error(errors);
               })}
               className=" space-y-6 mt-8"
             >

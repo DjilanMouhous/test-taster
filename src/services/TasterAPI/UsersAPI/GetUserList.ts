@@ -33,7 +33,6 @@ export async function getUserList({
   } else if (search && search !== "" && lastCursor) {
     queryParam = `?full_name=${search}&after=${lastCursor}`;
   }
-  console.log("queryParam", queryParam);
   const response = await fetch(`${API_BASE_URL}users${queryParam}`, {
     headers: {
       "X-Api-Key": API_KEY,
